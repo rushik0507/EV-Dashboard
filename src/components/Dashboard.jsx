@@ -71,7 +71,8 @@ function Dashboard() {
               </span>
             </div>
           </div>
-          <div className="main-lower-section"></div>
+          <div className="main-lower-section">
+          </div>
         </div>
       </div>
     </div>
