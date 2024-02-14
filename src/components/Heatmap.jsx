@@ -7,7 +7,6 @@ import {
   countMediumChargedVehicles,
   countShortChargedVehicles,
 } from "../components/Data";
-import "../stylesheet/heatmap.css";
 
 function Heatmap() {
   console.log(countFullyChargedVehicles());
