@@ -39,7 +39,7 @@ function Heatmap() {
           fontSize: "24px",
         },
         formatter: function (text, op) {
-          return [text, op.value];
+          return [text, op.value];    
         },
         offsetY: -4,
       },
