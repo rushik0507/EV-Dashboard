@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useState, useMemo } from "react";
 import "../stylesheet/table.css";
+import { Data } from "./Data";
 
 const useSortableData = (items, config = null) => {
   const [sortConfig, setSortConfig] = React.useState(config);
@@ -36,6 +37,7 @@ const useSortableData = (items, config = null) => {
 };
 
 const ProductTable = (props) => {
+  const [searchTerm, setSearchTerm] = useState("");
   const { items, requestSort, sortConfig } = useSortableData(props.products);
   const getClassNamesFor = (name) => {
     if (!sortConfig) {
@@ -43,166 +45,165 @@ const ProductTable = (props) => {
     }
     return sortConfig.key === name ? sortConfig.direction : undefined;
   };
+
+  const filteredItems = items.filter(
+    (item) =>
+      item.vehicleId.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      item.vendorName.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
+  const columnSums = useMemo(() => {
+    const aggregates = {};
+    if (filteredItems.length > 0) {
+      Object.keys(filteredItems[0]).forEach((key) => {
+        const values = filteredItems.map((item) => item[key]);
+        if (!values.every((value) => typeof value === "number")) {
+          // If values are not all numbers, count unique values
+          aggregates[key] = new Set(values).size;
+        } else {
+          // If values are numbers, sum them up
+          const sum = values.reduce((acc, value) => acc + value, 0);
+          aggregates[key] = parseFloat(sum.toFixed(2));
+        }
+      });
+    }
+    return aggregates;
+  }, [filteredItems]);
+
   return (
-    <table>
-      <caption>Products</caption>
-      <thead>
-        <tr>
-          <th>
-            <button
-              type="button"
-              onClick={() => requestSort("vehicleId")}
-              className={getClassNamesFor("vehicleId")}
-            >
-              vehicleId
-            </button>
-          </th>
-          <th>
-            <button
-              type="button"
-              onClick={() => requestSort("numberOfTrips")}
-              className={getClassNamesFor("numberOfTrips")}
-            >
-              numberOfTrips
-            </button>
-          </th>
-          <th>
-            <button
-              type="button"
-              onClick={() => requestSort("tripKilometers")}
-              className={getClassNamesFor("tripKilometers")}
-            >
-              tripKilometers
-            </button>
-          </th>
-          <th>
-            <button
-              type="button"
-              onClick={() => requestSort("averageKilometersPerTrip")}
-              className={getClassNamesFor("averageKilometersPerTrip")}
-            >
-              averageKilometersPerTrip
-            </button>
-          </th>
-          <th>
-            <button
-              type="button"
-              onClick={() => requestSort("averageDailyChargingTime")}
-              className={getClassNamesFor("averageDailyChargingTime")}
-            >
-              averageDailyChargingTime
-            </button>
-          </th>
-          <th>
-            <button
-              type="button"
-              onClick={() => requestSort("co2Emission")}
-              className={getClassNamesFor("co2Emission")}
-            >
-              co2Emission
-            </button>
-          </th>
-          <th>
-            <button
-              type="button"
-              onClick={() => requestSort("vendorName")}
-              className={getClassNamesFor("vendorName")}
-            >
-              vendorName
-            </button>
-          </th>
-          <th>
-            <button
-              type="button"
-              onClick={() => requestSort("averageTripsPerDay")}
-              className={getClassNamesFor("averageTripsPerDay")}
-            >
-              averageTripsPerDay
-            </button>
-          </th>
-          <th>
-            <button
-              type="button"
-              onClick={() => requestSort("averageWorkingHours")}
-              className={getClassNamesFor("averageWorkingHours")}
-            >
-              averageWorkingHours
-            </button>
-          </th>
-        </tr>
-      </thead>
-      <tbody>
-        {items.map((item) => (
-          <tr key={item.vehicleId}>
-            <td>{item.vehicleId}</td>
-            <td>{item.numberOfTrips}</td>
-            <td>{item.tripKilometers}</td>
-            <td>{item.averageKilometersPerTrip}</td>
-            <td>{item.averageDailyChargingTime}</td>
-            <td>{item.co2Emission}</td>
-            <td>{item.vendorName}</td>
-            <td>{item.averageTripsPerDay}</td>
-            <td>{item.averageWorkingHours}</td>
+    <>
+      <input
+        type="text"
+        placeholder="Search by Vehicle ID or Vendor's Name"
+        value={searchTerm}
+        onChange={(e) => setSearchTerm(e.target.value)}
+      />
+      <table>
+        <thead>
+          <tr>
+            <th>
+              <button
+                type="button"
+                onClick={() => requestSort("vehicleId")}
+                className={getClassNamesFor("vehicleId")}
+              >
+                Vehical ID
+              </button>
+            </th>
+            <th>
+              <button
+                type="button"
+                onClick={() => requestSort("numberOfTrips")}
+                className={getClassNamesFor("numberOfTrips")}
+              >
+                No. of Trips
+              </button>
+            </th>
+            <th>
+              <button
+                type="button"
+                onClick={() => requestSort("tripKilometers")}
+                className={getClassNamesFor("tripKilometers")}
+              >
+                Trips KMs
+              </button>
+            </th>
+            <th>
+              <button
+                type="button"
+                onClick={() => requestSort("averageKilometersPerTrip")}
+                className={getClassNamesFor("averageKilometersPerTrip")}
+              >
+                Avg Trips/day
+              </button>
+            </th>
+            <th>
+              <button
+                type="button"
+                onClick={() => requestSort("averageDailyChargingTime")}
+                className={getClassNamesFor("averageDailyChargingTime")}
+              >
+                Avg Daily Charge Time
+              </button>
+            </th>
+            <th>
+              <button
+                type="button"
+                onClick={() => requestSort("averageTripsPerDay")}
+                className={getClassNamesFor("averageTripsPerDay")}
+              >
+                AVG Trips/day
+              </button>
+            </th>
+            <th>
+              <button
+                type="button"
+                onClick={() => requestSort("averageWorkingHours")}
+                className={getClassNamesFor("averageWorkingHours")}
+              >
+                AVG working hours
+              </button>
+            </th>
+            <th>
+              <button
+                type="button"
+                onClick={() => requestSort("co2Emission")}
+                className={getClassNamesFor("co2Emission")}
+              >
+                CO<sub>2</sub> Emission saved
+              </button>
+            </th>
+            <th>
+              <button
+                type="button"
+                onClick={() => requestSort("vendorName")}
+                className={getClassNamesFor("vendorName")}
+              >
+                Vendor Name
+              </button>
+            </th>
           </tr>
-        ))}
-      </tbody>
-    </table>
+        </thead>
+        <tbody>
+          {filteredItems.length > 0 ? (
+            filteredItems.map((item) => (
+              <tr key={item.vehicleId}>
+                <td>{item.vehicleId}</td>
+                <td>{item.numberOfTrips}</td>
+                <td>{item.tripKilometers}</td>
+                <td>{item.averageKilometersPerTrip}</td>
+                <td>{item.averageDailyChargingTime}</td>
+                <td>{item.averageTripsPerDay}</td>
+                <td>{item.averageWorkingHours}</td>
+                <td>{item.co2Emission}</td>
+                <td>{item.vendorName}</td>
+              </tr>
+            ))
+          ) : (
+            <tr>
+              <td colSpan="10">No data found</td>
+            </tr>
+          )}
+          {/* Row for sums */}
+          <tr className="lastraw">
+            {/* Render sums for each column */}
+            {Object.keys(columnSums).map((key) => (
+              <td key={key}>{columnSums[key]}</td>
+            ))}
+          </tr>
+        </tbody>
+      </table>
+    </>
   );
 };
 
-export default function App() {
+export default function Tablesort() {
   return (
-    <div className="App">
-      <ProductTable
-        products={[
-          {
-            vehicleId: 1,
-            numberOfTrips: 50,
-            tripKilometers: 1000,
-            averageKilometersPerTrip: 20,
-            averageDailyChargingTime: 2.5,
-            co2Emission: 80,
-            vendorName: "Tesla",
-            averageTripsPerDay: 5,
-            averageWorkingHours: 8,
-          },
-          {
-            vehicleId: 2,
-            numberOfTrips: 30,
-            tripKilometers: 600,
-            averageKilometersPerTrip: 20,
-            averageDailyChargingTime: 3,
-            co2Emission: 60,
-            vendorName: "Nissan",
-            averageTripsPerDay: 3,
-            averageWorkingHours: 7,
-          },
-          {
-            vehicleId: 3,
-            numberOfTrips: 40,
-            tripKilometers: 800,
-            averageKilometersPerTrip: 20,
-            averageDailyChargingTime: 2,
-            co2Emission: 70,
-            vendorName: "Chevrolet",
-            averageTripsPerDay: 4,
-            averageWorkingHours: 7.5,
-          },
-          // Add more vehicles below
-          {
-            vehicleId: 4,
-            numberOfTrips: 45,
-            tripKilometers: 900,
-            averageKilometersPerTrip: 20,
-            averageDailyChargingTime: 2.2,
-            co2Emission: 75,
-            vendorName: "Toyota",
-            averageTripsPerDay: 4.5,
-            averageWorkingHours: 7.8,
-          }
-          // Add more vehicles as needed
-        ]}
-      />
-    </div>
+    <>
+      <div className="table-body">
+        <h2>Vehical Utilization</h2>
+        <ProductTable products={Data} />
+      </div>
+    </>
   );
 }
