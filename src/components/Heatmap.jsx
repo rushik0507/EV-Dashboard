@@ -1,35 +1,63 @@
-import React from 'react';
-import { Bar } from 'react-chartjs-2';
+import React, { useState } from "react";
+import ReactApexChart from "react-apexcharts";
+import {
+  Data,
+  countDischargedVehicles,
+  countFullyChargedVehicles,
+  countMediumChargedVehicles,
+  countShortChargedVehicles,
+} from "../components/Data";
+import "../stylesheet/heatmap.css";
 
-const HeatMap = ({ data, dates }) => {
-  const chartData = {
-    labels: dates,
-    datasets: data.map((vehicle, index) => ({
-      label: `Vehicle ${index + 1}`,
-      data: vehicle.metrics.kilometers_traveled.map(metric => metric.value),
-      backgroundColor: 'rgba(255, 99, 132, 0.2)', // Adjust color as needed
-      borderColor: 'rgba(255, 99, 132, 1)',
-      borderWidth: 1,
-    })),
-  };
+function Heatmap() {
+  console.log(countFullyChargedVehicles());
+
+  const [chartData, setChartData] = useState({
+    series: [
+      {
+        data: [
+          { x: "Long", y: countFullyChargedVehicles() },
+          { x: "Medium", y: countMediumChargedVehicles() },
+          { x: "Short", y: countShortChargedVehicles() },
+          { x: "Discharged", y: countDischargedVehicles() },
+        ],
+      },
+    ],
+    options: {
+      legend: {
+        show: false,
+      },
+      chart: {
+        type: "treemap",
+      },
+      colors: ["#3DAF29", "#FFBC00", "#FF0000", "#000000"],
+      title: {
+        text: "Fleet Charge Levels",
+      },
+      dataLabels: {
+        enabled: true,
+        style: {
+          fontSize: "24px",
+        },
+        formatter: function (text, op) {
+          return [text, op.value];
+        },
+        offsetY: -4,
+      },
+    },
+  });
 
   return (
-    <div>
-      <Bar
-        data={chartData}
-        options={{
-          scales: {
-            xAxes: [{
-              stacked: true,
-            }],
-            yAxes: [{
-              stacked: true,
-            }],
-          },
-        }}
-      />
-    </div>
+    <>
+      <div className="chart">
+        <ReactApexChart
+          options={chartData.options}
+          series={chartData.series}
+          type="treemap"
+        />
+      </div>
+    </>
   );
-};
+}
 
-export default HeatMap;
+export default Heatmap;

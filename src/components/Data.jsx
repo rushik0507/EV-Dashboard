@@ -9,6 +9,7 @@ export const Data = [
     averageWorkingHours: 8,
     co2Emission: 80,
     vendorName: "Tesla",
+    battery: 50,
   },
   {
     vehicleId: "EV2",
@@ -20,6 +21,7 @@ export const Data = [
     averageWorkingHours: 7,
     co2Emission: 60,
     vendorName: "Nissan",
+    battery: 60,
   },
   {
     vehicleId: "EV3",
@@ -31,6 +33,7 @@ export const Data = [
     averageWorkingHours: 7.5,
     co2Emission: 70,
     vendorName: "Chevrolet",
+    battery: 45,
   },
   {
     vehicleId: "EV4",
@@ -42,6 +45,7 @@ export const Data = [
     averageWorkingHours: 7.8,
     co2Emission: 75,
     vendorName: "Toyota",
+    battery: 90,
   },
   {
     vehicleId: "EV11",
@@ -53,6 +57,7 @@ export const Data = [
     averageWorkingHours: 8.8,
     co2Emission: 65,
     vendorName: "BMW",
+    battery: 70,
   },
   {
     vehicleId: "EV12",
@@ -64,6 +69,7 @@ export const Data = [
     averageWorkingHours: 8.5,
     co2Emission: 78,
     vendorName: "Audi",
+    battery: 20,
   },
   {
     vehicleId: "EV13",
@@ -75,6 +81,7 @@ export const Data = [
     averageWorkingHours: 9.2,
     co2Emission: 85,
     vendorName: "Mercedes-Benz",
+    battery: 90,
   },
   {
     vehicleId: "EV14",
@@ -86,6 +93,7 @@ export const Data = [
     averageWorkingHours: 8,
     co2Emission: 72,
     vendorName: "Hyundai",
+    battery: 10,
   },
   {
     vehicleId: "EV15",
@@ -97,6 +105,7 @@ export const Data = [
     averageWorkingHours: 7.5,
     co2Emission: 70,
     vendorName: "Kia",
+    battery: 0,
   },
   {
     vehicleId: "EV8",
@@ -108,6 +117,7 @@ export const Data = [
     averageWorkingHours: 7,
     co2Emission: 50,
     vendorName: "Ford",
+    battery: 0,
   },
   {
     vehicleId: "EV9",
@@ -119,6 +129,7 @@ export const Data = [
     averageWorkingHours: 8.3,
     co2Emission: 70,
     vendorName: "Honda",
+    battery: 80,
   },
   {
     vehicleId: "EV10",
@@ -130,7 +141,54 @@ export const Data = [
     averageWorkingHours: 9,
     co2Emission: 85,
     vendorName: "Volkswagen",
+    battery: 75,
   },
 
   // Add more vehicles as needed
 ];
+
+function countDischargedVehicles() {
+  let count = 0;
+  Data.forEach(vehicle => {
+      if(vehicle.battery < 10) {
+          count++;
+      }
+  });
+  return count;
+}
+
+// function to count the number of vehicles who have battery level greater than 90 (fully charged state, long range)
+function countFullyChargedVehicles() {
+  let count = 0;
+  Data.forEach(vehicle => {
+      if(vehicle.battery > 80) {
+          count++;
+      }
+  });
+  return count;
+}
+
+// function to count the number of vehicles who have battery level between 40 and 80 (partially charged state, medium range)
+function countMediumChargedVehicles() {
+  let count = 0;
+  Data.forEach(vehicle => {
+      if(vehicle.battery > 40 && vehicle.battery < 80) {
+          count++;
+      }
+  });
+  return count;
+}
+
+// function to count the number of vehicles who have battery level between 10  (partially charged state, short range)
+function countShortChargedVehicles() {
+  let count = 0;
+  Data.forEach(vehicle => {
+      if(vehicle.battery > 10 && vehicle.battery < 40) {
+          count++;
+      }
+  });
+  return count;
+}
+
+
+export { countDischargedVehicles, countFullyChargedVehicles, countMediumChargedVehicles, countShortChargedVehicles };

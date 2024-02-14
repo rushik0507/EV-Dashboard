@@ -1,3 +1,8 @@
+.wrapper{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 .table-body {
   width: 96vw;
   height: fit-content;
@@ -75,6 +80,9 @@ tr:nth-child(even) {
 @media only screen and (max-width: 786px) {
   .table {
     justify-content: normal;
+  }
+  .wrapper{
+    padding: 3vw;
   }
   .table-search {
     flex-direction: column;

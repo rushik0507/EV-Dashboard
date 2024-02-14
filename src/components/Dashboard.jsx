@@ -111,7 +111,7 @@ function Dashboard() {
             </div>
           </div>
           <div className="main-lower-section">
-            {/* <Heatmap data={fleetData.vehicles} dates={dates} /> */}
+            <Heatmap  />
           </div>
         </div>
       </div>
