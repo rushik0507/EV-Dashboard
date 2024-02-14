@@ -72,12 +72,16 @@ const ProductTable = (props) => {
 
   return (
     <>
-      <input
-        type="text"
-        placeholder="Search by Vehicle ID or Vendor's Name"
-        value={searchTerm}
-        onChange={(e) => setSearchTerm(e.target.value)}
-      />
+      <div className="table-search">
+        <h2>Vehical Utilization:</h2>
+        <input
+          type="text"
+          placeholder="Search by Vehicle ID or Vendor's Name"
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+        />
+      </div>
+      <div className="table">
       <table>
         <thead>
           <tr>
@@ -181,7 +185,9 @@ const ProductTable = (props) => {
             ))
           ) : (
             <tr>
-              <td colSpan="10">No data found</td>
+              <td colSpan="10" style={{ textAlign: "center" }}>
+                No data found
+              </td>
             </tr>
           )}
           {/* Row for sums */}
@@ -193,6 +199,7 @@ const ProductTable = (props) => {
           </tr>
         </tbody>
       </table>
+      </div>
     </>
   );
 };
@@ -201,7 +208,6 @@ export default function Tablesort() {
   return (
     <>
       <div className="table-body">
-        <h2>Vehical Utilization</h2>
         <ProductTable products={Data} />
       </div>
     </>
