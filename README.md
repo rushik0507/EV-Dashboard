@@ -21,7 +21,8 @@ The objective of this project is to develop an EV dashboard consisting of two co
 
 ## Video/Screenshots
 #### If the video fails to load, consider refreshing the page to potentially resolve the issue.
-https://github.com/anshumanthakur07/Seat-Booking--MoveInSync/assets/97978839/604fb5fa-428f-4df2-a2ab-3a6512859fb2
+
+https://github.com/rushik0507/EV-Dashboard/assets/110762539/5c2fe785-f849-49e6-a3b2-de2c7783437f
 
 - component 1:
 ![Screenshot (349)](https://github.com/rushik0507/EV-Dashboard/assets/110762539/2a211e9a-d47e-4ee2-8bca-f965b8a66922)
