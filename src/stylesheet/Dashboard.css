@@ -90,6 +90,8 @@
   height: 85%;
   background-color: #242524;
   border-radius: 20px;
+  display: grid;
+  grid-area: heatmap;
 }
 .data {
   align-items: center;
@@ -97,6 +99,9 @@
   img {
     margin: 1vw 2vw;
   }
+}
+.apexcharts-tooltip {
+  color: #111111;
 }
 
 @media only screen and (max-width: 786px) {

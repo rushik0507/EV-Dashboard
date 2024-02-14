@@ -147,48 +147,106 @@ export const Data = [
   // Add more vehicles as needed
 ];
 
+// function countDischargedVehicles() {
+//   let count = 0;
+//   Data.forEach(vehicle => {
+//       if(vehicle.battery < 10) {
+//           count++;
+//       }
+//   });
+//   return count;
+// }
+
+// // function to count the number of vehicles who have battery level greater than 90 (fully charged state, long range)
+// function countFullyChargedVehicles() {
+//   let count = 0;
+//   Data.forEach(vehicle => {
+//       if(vehicle.battery > 80) {
+//           count++;
+//       }
+//   });
+//   return count;
+// }
+
+// // function to count the number of vehicles who have battery level between 40 and 80 (partially charged state, medium range)
+// function countMediumChargedVehicles() {
+//   let count = 0;
+//   Data.forEach(vehicle => {
+//       if(vehicle.battery > 40 && vehicle.battery < 80) {
+//           count++;
+//       }
+//   });
+//   return count;
+// }
+
+// // function to count the number of vehicles who have battery level between 10  (partially charged state, short range)
+// function countShortChargedVehicles() {
+//   let count = 0;
+//   Data.forEach(vehicle => {
+//       if(vehicle.battery > 10 && vehicle.battery < 40) {
+//           count++;
+//       }
+//   });
+//   return count;
+// }
+
+
+// export { countDischargedVehicles, countFullyChargedVehicles, countMediumChargedVehicles, countShortChargedVehicles };
+
 function countDischargedVehicles() {
   let count = 0;
+  let sumCO2 = 0;
+  let sumKilometers = 0;
   Data.forEach(vehicle => {
       if(vehicle.battery < 10) {
           count++;
+          sumCO2 += vehicle.co2Emission;
+          sumKilometers += vehicle.tripKilometers;
       }
   });
-  return count;
+  return { count, sumCO2, sumKilometers };
 }
 
-// function to count the number of vehicles who have battery level greater than 90 (fully charged state, long range)
 function countFullyChargedVehicles() {
   let count = 0;
+  let sumCO2 = 0;
+  let sumKilometers = 0;
   Data.forEach(vehicle => {
       if(vehicle.battery > 80) {
           count++;
+          sumCO2 += vehicle.co2Emission;
+          sumKilometers += vehicle.tripKilometers;
       }
   });
-  return count;
+  return { count, sumCO2, sumKilometers };
 }
 
-// function to count the number of vehicles who have battery level between 40 and 80 (partially charged state, medium range)
 function countMediumChargedVehicles() {
   let count = 0;
+  let sumCO2 = 0;
+  let sumKilometers = 0;
   Data.forEach(vehicle => {
       if(vehicle.battery > 40 && vehicle.battery < 80) {
           count++;
+          sumCO2 += vehicle.co2Emission;
+          sumKilometers += vehicle.tripKilometers;
       }
   });
-  return count;
+  return { count, sumCO2, sumKilometers };
 }
 
-// function to count the number of vehicles who have battery level between 10  (partially charged state, short range)
 function countShortChargedVehicles() {
   let count = 0;
+  let sumCO2 = 0;
+  let sumKilometers = 0;
   Data.forEach(vehicle => {
       if(vehicle.battery > 10 && vehicle.battery < 40) {
           count++;
+          sumCO2 += vehicle.co2Emission;
+          sumKilometers += vehicle.tripKilometers;
       }
   });
-  return count;
+  return { count, sumCO2, sumKilometers };
 }
-
 
 export { countDischargedVehicles, countFullyChargedVehicles, countMediumChargedVehicles, countShortChargedVehicles };
